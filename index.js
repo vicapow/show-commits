@@ -35,7 +35,7 @@ var output = child.exec(cmd, {
     var cmd = GOOGLE_CHROME_PATH + ' \
       --user-data-dir=' + tmpDir + ' \
       --force-app-mode \
-      --window-size=1200,800 \
+      --kiosk \
       --app=http://' + host + ':' + port + '/';
     console.log(cmd);
     var child = spawnCommand(cmd);

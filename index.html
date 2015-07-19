@@ -6,8 +6,8 @@
   <script charset="utf-8" src="/node_modules/d3/d3.js"></script>
   <script>
 
-var width = 1200;
-var height = 800;
+var width = window.innerWidth;
+var height = window.innerHeight;
 var margins = {left: 150, top: 30, right: 30, bottom: 40};
 var svg = d3.select('body').append('svg').attr({width: width, height: height});
 
