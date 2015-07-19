@@ -6,6 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/vicapow/show-commits.git"
+  },
   "preferGlobal": "true",
   "bin": {
     "show-commits": "index.js"
