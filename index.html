@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+  <script charset="utf-8" src="/node_modules/d3/d3.js"></script>
+  <script>
+
+var width = 1200;
+var height = 800;
+var margins = {left: 150, top: 30, right: 30, bottom: 40};
+var svg = d3.select('body').append('svg').attr({width: width, height: height});
+
+d3.csv('/commits.csv', function(row) {
+  row.timestamp = new Date(+row.timestamp * 1000);
+  return row;
+}, function(err, commits) {
+  if (err) throw err;
+
+  var timestampExtent = d3.extent(commits, function(commit) {
+    return commit.timestamp;
+  });
+
+  var authors = d3.map(commits, function(commit) {
+    return commit.author;
+  }).keys();
+
+  var xScale = d3.time.scale.utc()
+    .domain(timestampExtent)
+    .range([margins.left, width - margins.right]);
+
+  var yScale = d3.scale.ordinal()
+    .domain(authors)
+    .rangePoints([margins.top, height - margins.bottom]);
+
+  var colorScale = d3.scale.category20();
+
+  var pointsContainer = svg.append('g');
+  pointsContainer.selectAll('circle').data(commits)
+    .enter()
+    .append('circle')
+    .attr({
+      r: 4,
+      transform: function(commit) {
+        var pos = [xScale(commit.timestamp), yScale(commit.author)];
+        return 'translate(' + pos + ')';
+      }
+    })
+    .style({
+      fill: function(commit) { return colorScale(commit.author); },
+      'fill-opacity': 1
+    });
+
+  var xAxis = d3.svg.axis()
+    .orient('bottom')
+    .scale(xScale);
+
+  svg.append('g').call(xAxis)
+    .attr('transform', 'translate(' + [0, height - margins.bottom + 10] + ')')
+    .call(function(g) {
+      g.selectAll('line').style({stroke: 'black'})
+      g.select('path').style({fill: 'none', stroke: 'black'});
+    })
+    .style({'font-family': 'Helvetica Neue', 'font-size': 12});
+
+  svg.append('g')
+    .selectAll('text').data(authors).enter().append('text')
+      .attr({
+        'text-anchor': 'end',
+        transform: function(author) {
+          return 'translate(' + [margins.left - 10, yScale(author) + 3] + ')';
+        },
+        'font-family': 'Helvetica Neue',
+        'font-size': 12
+      }).text(function(author) { return author; });
+
+});
+  </script>
+</body>
+</html>

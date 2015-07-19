@@ -1,0 +1,21 @@
+{
+  "name": "show-commits",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "preferGlobal": "true",
+  "bin": {
+    "show-commits": "index.js"
+  },
+  "author": "Victor Powell",
+  "license": "ISC",
+  "dependencies": {
+    "d3": "^3.5.6",
+    "express": "^4.13.1",
+    "mkdirp": "^0.5.1",
+    "spawn-command": "0.0.2-1"
+  }
+}
