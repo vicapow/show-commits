@@ -8,11 +8,27 @@ var spawnCommand = require('spawn-command');
 var app = express();
 var port = 1454;
 
-var GOOGLE_CHROME_PATH = '/Applications/Google\ Chrome.app\
-/Contents/MacOS/Google\ Chrome';
-GOOGLE_CHROME_PATH = GOOGLE_CHROME_PATH.replace(/\ /g, '\\ ');
+var GOOGLE_CHROME_PATH = null;
+
+if (process.platform == "darwin") {
+  GOOGLE_CHROME_PATH = '/Applications/Google\ Chrome.app\
+  /Contents/MacOS/Google\ Chrome';
+  GOOGLE_CHROME_PATH = GOOGLE_CHROME_PATH.replace(/\ /g, '\\ ');
+} else if (process.platform == "linux") {
+  GOOGLE_CHROME_PATH = '/usr/bin/google-chrome';
+} else {
+  console.log("Unsupported OS. show-commits only runs on OSX and Linux");
+  process.exit(1);
+}
 
 app.use(express.static(__dirname));
+
+var tmpPath = process.env.TMPDIR
+if (!tmpPath) {
+  console.log("Unable to detect TMPDIR. Please set your own TMPDIR e.g.\n")
+  console.log("  TMPDIR=/tmp show-commits\n")
+  process.exit(1);
+}
 
 var tmpDir = path.join(process.env.TMPDIR, 'show-commits');
 
