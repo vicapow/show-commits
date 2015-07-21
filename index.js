@@ -12,7 +12,7 @@ var GOOGLE_CHROME_PATH = null;
 
 if (process.platform == "darwin") {
   GOOGLE_CHROME_PATH = '/Applications/Google\ Chrome.app\
-  /Contents/MacOS/Google\ Chrome';
+/Contents/MacOS/Google\ Chrome';
   GOOGLE_CHROME_PATH = GOOGLE_CHROME_PATH.replace(/\ /g, '\\ ');
 } else if (process.platform == "linux") {
   GOOGLE_CHROME_PATH = '/usr/bin/google-chrome';

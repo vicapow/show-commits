@@ -31,7 +31,7 @@ d3.csv('/commits.csv', function(row) {
 
   var yScale = d3.scale.ordinal()
     .domain(authors)
-    .rangePoints([margins.top, height - margins.bottom]);
+    .rangePoints([margins.top, height - margins.bottom], 1);
 
   var colorScale = d3.scale.category20();
 
